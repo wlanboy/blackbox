@@ -1,12 +1,12 @@
 [
     {
-      "targets": ["localhost:8080/actuator/health"],
+      "targets": ["http://localhost:8080/actuator/health"],
       "labels": {
         "standort": "RZ1"
       }
     },
     {
-      "targets": ["www.google.com","www.google.de"],
+      "targets": ["https://www.google.com","https://www.google.de"],
       "labels": {
         "standort": "RZ2"
       }
