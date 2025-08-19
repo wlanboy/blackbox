@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./scrapeconfigs:/etc/prometheus/scrapeconfigs:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - 9090:9090
+
+  blackbox:
+    image: prom/blackbox-exporter:latest
+    volumes:
+      - ./blackbox.yml:/config/blackbox.yml:ro
+      - ./web.yml:/config/web.yml:ro
+    command:
+      - '--config.file=/config/blackbox.yml'
+      - '--web.config=/config/web.yml'
+    ports:
+      - 9115:9115
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    ports:
+      - 3000:3000
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-data:/var/lib/grafana
+
+volumes:
+  grafana-data:
+  prometheus-data:
