@@ -80,4 +80,27 @@ docker compose up
 Das Dashboard-JSON kann wie gewohnt in Grafana importiert werden.
 
 ---
+
+## Secret für web.yml generieren
+
+Um ein sicheres bcrypt-Hash für einen User in der `web.yml` zu erzeugen, kann das Python-Skript `auth.py` genutzt werden:
+
+```bash
+python3 auth.py
+```
+
+Das Skript fragt nach einem Passwort und gibt den bcrypt-Hash aus. Diesen Hash kannst du dann in der `web.yml` als Passwort eintragen, z.B.:
+
+```yaml
+basic_auth_users:
+	benutzername: <hier-den-bcrypt-hash-einfügen>
+```
+
+Beispiel:
+```yaml
+basic_auth_users:
+	test: $2b$12$...deinHash...
+```
+
+---
 Weitere Infos: Siehe offizielle Doku von [Prometheus](https://prometheus.io/docs/introduction/overview/), [Blackbox Exporter](https://github.com/prometheus/blackbox_exporter) und [Grafana](https://grafana.com/docs/).
